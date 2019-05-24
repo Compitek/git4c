@@ -98,6 +98,11 @@ var Markup = {
                                 return "View the full source of this file"
                             }
                         })
+                        $(vm.$refs.raw_save_file_button).tooltip({
+                            title: function(){
+                                return "Save the full source of this file"
+                            }
+                        })
                         $(vm.$refs.updatetime).tooltip('destroy')
                         $(vm.$refs.updatetime).tooltip({
                             title: function () {
@@ -150,6 +155,9 @@ var Markup = {
         openDialog: function () {
             this.$refs.sourcedialog.show(this.rawContent)
             $("#git4c-markdown-dialog-close-button").blur()
+        },
+        saveAsFile: function () {
+            window.localStorage.setItem('arr', this.rawContent);
         },
         closeRawContentDialog: function(){
             AJS.dialog2(this.$refs.git4c_raw_file_dialog).hide()

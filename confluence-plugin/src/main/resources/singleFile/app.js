@@ -118,6 +118,10 @@ var Git4CSingleFileMacro = {
                     vm.$refs.sourcedialog.show(vm.rawContent)
                 })
 
+                Events.$on("openSourceDialog", function () {
+                    window.localStorage.setItem('arr', this.rawContent);
+                })
+
                 Events.$on("toggleTopbar", function () {
                     vm.showTopBar = !vm.showTopBar
                     vm.$nextTick(function () {

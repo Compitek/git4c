@@ -53,6 +53,11 @@ var TopBar = {
         '                        Show raw markdown'+
         '                    </span>'+
         '                </button>'+
+        '                <button ref="raw_save_file_button" class="aui-button raw-file-button" v-on:click="saveSourceAsFile()" v-if="hasSource" style="margin-left: 10px">'+
+        '                    <span class="aui-icon aui-icon-small aui-iconfont-export">'+
+        '                        Save to local file'+
+        '                    </span>'+
+        '                </button>'+
         '            </div>'+
         '            <div style="margin-left: 10px; display: flex; flex-direction: column; justify-content: center" v-if="document">'+
         '                <commit-history macro-uuid="' + uuid  +'" :file="document.fullName" :branch="branchName" ref="commit_history"></commit-history>'+
@@ -226,6 +231,9 @@ var TopBar = {
                 },
                 openSourceDialog: function () {
                     Events.$emit("openSourceDialog")
+                },
+                saveSourceAsFile(): function () {
+                    Events.$emit("saveSourceAsFile")
                 },
                 toggleCollapsed: function () {
                     Events.$emit("setCollapse", !this.collapsed)

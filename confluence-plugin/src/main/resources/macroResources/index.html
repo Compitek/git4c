@@ -149,6 +149,11 @@
                                             Show raw markdown
                                         </span>
                                     </button>
+                                    <button ref="raw_save_file_button" class="aui-button" v-on:click="saveAsFile()" v-show="hasSource" style="margin-right: 5px">
+                                        <span class="aui-icon aui-icon-small aui-iconfont-export" style="margin-right: 1px">
+                                            Save to local file
+                                        </span>
+                                    </button>
                                     <div ref="commit_history_div" style="margin-right: 20px; display: flex; flex-direction: column; justify-content: center">
                                         <commit-history :macro-uuid="macroUuid" :branch="branch" :file="file" ref="commit_history"></commit-history>
                                     </div>
