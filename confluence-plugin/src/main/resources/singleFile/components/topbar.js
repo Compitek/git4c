@@ -232,7 +232,7 @@ var TopBar = {
                 openSourceDialog: function () {
                     Events.$emit("openSourceDialog")
                 },
-                saveSourceAsFile(): function () {
+                saveSourceAsFile: function () {
                     Events.$emit("saveSourceAsFile")
                 },
                 toggleCollapsed: function () {
