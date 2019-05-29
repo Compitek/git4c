@@ -157,7 +157,29 @@ var Markup = {
             $("#git4c-markdown-dialog-close-button").blur()
         },
         saveAsFile: function () {
-            window.localStorage.setItem('arr', this.rawContent);
+            alert('1-'+this.rawContent)
+            alert('2-'+this.locationPath)
+        },
+        copyToClipboard: function copyToClipboard() {
+            if (window.clipboardData && window.clipboardData.setData) {
+                // IE specific code path to prevent textarea being shown while dialog is visible.
+                return clipboardData.setData("Text", this.rawContent);
+
+            } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+                var textarea = document.createElement("textarea");
+                textarea.textContent = this.rawContent;
+                textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+                } catch (ex) {
+                    console.warn("Copy to clipboard failed.", ex);
+                    return false;
+                } finally {
+                    document.body.removeChild(textarea);
+                }
+            }
         },
         closeRawContentDialog: function(){
             AJS.dialog2(this.$refs.git4c_raw_file_dialog).hide()
