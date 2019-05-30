@@ -10,7 +10,7 @@ object Git4CAsciidocFactory {
 
     fun create(confluence: Boolean): Asciidoctor {
 
-        val asciidoctorVersion = "1.5.6.1"
+        val asciidoctorVersion = "1.5.8.1"
 
         val config = RubyInstanceConfig()
         config.loader = this::class.java.classLoader

@@ -8,6 +8,7 @@ import org.asciidoctor.extension.ExtensionGroup;
 import org.asciidoctor.extension.JavaExtensionRegistry;
 import org.asciidoctor.extension.RubyExtensionRegistry;
 import org.asciidoctor.extension.internal.ExtensionRegistryExecutor;
+import org.asciidoctor.log.LogHandler;
 import org.jruby.CompatVersion;
 import org.jruby.Ruby;
 import org.jruby.RubyHash;
@@ -81,7 +82,7 @@ public class Git4CJRubyAsciidoctor implements Asciidoctor {
         return git4CJRubyAsciidoctor;
     }
 
-    private static void injectEnvironmentVariables(RubyInstanceConfig config, Map<String, Object> environmentVars) {
+    private static void injectEnvironmentVariables(RubyInstanceConfig config, Map<String, String> environmentVars) {
         EnvironmentInjector environmentInjector = new EnvironmentInjector(config);
         environmentInjector.inject(environmentVars);
     }
@@ -524,6 +525,16 @@ public class Git4CJRubyAsciidoctor implements Asciidoctor {
     public Document loadFile(File file, Map<String, Object> options) {
         RubyHash rubyHash = RubyHashUtil.convertMapToRubyHashWithSymbols(rubyRuntime, options);
         return new Document(this.asciidoctorModule.load_file(file.getAbsolutePath(), rubyHash), this.rubyRuntime);
+    }
+
+
+    public void registerLogHandler(LogHandler logHandler) {
+        //TODO
+    }
+
+
+    public void unregisterLogHandler(LogHandler logHandler) {
+        //TODO
     }
 
     Ruby getRubyRuntime() {
