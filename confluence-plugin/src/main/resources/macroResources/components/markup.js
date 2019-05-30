@@ -103,6 +103,11 @@ var Markup = {
                                 return "Save the full source of this file"
                             }
                         })
+                        $(vm.$refs.raw_to_clipboard_button).tooltip({
+                            title: function(){
+                                return "Copy the source of this file to clipboard"
+                            }
+                        })
                         $(vm.$refs.updatetime).tooltip('destroy')
                         $(vm.$refs.updatetime).tooltip({
                             title: function () {

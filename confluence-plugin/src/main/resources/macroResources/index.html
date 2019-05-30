@@ -146,19 +146,20 @@
                                     </div>
                                     <button ref="raw_file_button" class="aui-button" v-on:click="openDialog()" v-show="hasSource" style="margin-right: 5px">
                                         <span class="aui-icon aui-icon-small aui-iconfont-devtools-file" style="margin-right: 1px">
-                                            Show raw markdown
+                                            View the full source of this file
                                         </span>
                                     </button>
-                                    <a v-bind:href="'data:application/xml;charset=utf-8,' + rawContent" v-bind:download="locationPath"
+                                    <a ref="raw_save_file_button"
+                                       v-bind:href="'data:application/xml;charset=utf-8,' + rawContent" v-bind:download="locationPath"
                                        v-show="hasSource" style="margin-right: 5px" class="aui-button">
                                         <span class="aui-icon aui-icon-small aui-iconfont-export" style="margin-right: 1px">
-                                            Save to local file
+                                            Save the full source of this file
                                         </span>
                                     </a>
-                                    <button ref="raw_save_file_button" class="aui-button" v-on:click="copyToClipboard()"
+                                    <button ref="raw_to_clipboard_button" class="aui-button" v-on:click="copyToClipboard()"
                                             v-show="hasSource" style="margin-right: 5px">
                                         <span class="aui-icon aui-icon-small aui-iconfont-copy" style="margin-right: 1px">
-                                            Copy to clipboard
+                                            Copy the source of this file to clipboard
                                         </span>
                                     </button>
                                     <div ref="commit_history_div" style="margin-right: 20px; display: flex; flex-direction: column; justify-content: center">
