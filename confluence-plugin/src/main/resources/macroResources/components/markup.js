@@ -156,10 +156,6 @@ var Markup = {
             this.$refs.sourcedialog.show(this.rawContent)
             $("#git4c-markdown-dialog-close-button").blur()
         },
-        saveAsFile: function () {
-            alert('1-'+this.rawContent)
-            alert('2-'+this.locationPath)
-        },
         copyToClipboard: function copyToClipboard() {
             if (window.clipboardData && window.clipboardData.setData) {
                 // IE specific code path to prevent textarea being shown while dialog is visible.
