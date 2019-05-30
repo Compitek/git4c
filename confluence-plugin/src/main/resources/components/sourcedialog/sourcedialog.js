@@ -13,10 +13,27 @@ var Git4CSourceDialog = {
             '       <!-- The dialog\'s title -->'+
             '        <h2 class="aui-dialog2-header-main">File source</h2>'+
             '        <!-- Actions to render on the right of the header -->'+
-            '        <!-- Close icon -->'+
-            '        <a class="aui-dialog2-header-close">'+
-            '            <span class="aui-icon aui-icon-small aui-iconfont-close-dialog">Close</span>'+
-            '        </a>'+
+            '        <div>'+
+            '           <a ref="raw_save_file_button"'+
+            '              v-bind:href="\'data:application/xml;charset=utf-8,\' + rawContent" v-bind:download="locationPath"'+
+            '               style="margin-right: 5px" class="aui-button">'+
+            '                <span class="aui-icon aui-icon-small aui-iconfont-export" style="margin-right: 1px">'+
+            '                    Save the full source of this file'+
+            '                </span>'+
+            '           </a>'+
+            '           <button class="aui-button" v-on:click="copyToClipboard()"'+
+            '                    style="margin-right: 5px">'+
+            '               <span class="aui-icon aui-icon-small aui-iconfont-copy" style="margin-right: 1px">'+
+            '                    Copy the source of this file to clipboard'+
+            '               </span>'+
+            '           </button>'+
+            '           <button class="aui-button" v-on:click="closeDialog()"'+
+            '                    style="margin-right: 5px">'+
+            '               <span class="aui-icon aui-icon-small aui-iconfont-close-dialog" style="margin-right: 1px">'+
+            '                    Close'+
+            '               </span>'+
+            '           </button>'+
+            '        </div>'+
             '    </header>'+
             '    <!-- Main dialog content -->'+
             '    <div class="aui-dialog2-content" ref="dialog_content">'+
@@ -28,11 +45,16 @@ var Git4CSourceDialog = {
             '        </div>'+
             '    </footer>'+
             '</section>',
-
+            data: function () {
+                return {
+                    rawContent: "",
+                    locationPath: ""
+                };
+            },
             methods: {
-
-                show: function (fileContent) {
-
+                show: function (fileContent, strPath) {
+                    this.rawContent = fileContent
+                    this.locationPath = strPath
                     const normalizedString = fileContent.replace(/\s+/g, '')
 
                     //https://stackoverflow.com/a/6234804/2511670
@@ -75,13 +97,33 @@ var Git4CSourceDialog = {
                     AJS.dialog2(dialogDom).show()
 
                 },
+                copyToClipboard: function copyToClipboard() {
+                    console.log(">> modal copyToClipboard()");
+                    if (window.clipboardData && window.clipboardData.setData) {
+                        // IE specific code path to prevent textarea being shown while dialog is visible.
+                        return window.clipboardData.setData("Text", this.rawContent);
 
+                    } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+                        var textarea = document.createElement("textarea");
+                        textarea.textContent = this.rawContent;
+                        textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+                        document.getElementById('git4c-raw-sourcecode-dialog').appendChild(textarea);
+                        textarea.select();
+                        try {
+                            console.log("textarea.textContent " + textarea.textContent );
+                            return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+                        } catch (ex) {
+                            console.warn("Copy to clipboard failed.", ex);
+                            return false;
+                        } finally {
+                            document.getElementById('git4c-raw-sourcecode-dialog').removeChild(textarea);
+                        }
+                    }
+                },
                 closeDialog: function () {
                     const dialogDom = this.$refs.dialog
-
                     AJS.dialog2(dialogDom).hide()
                 }
-
 
             }
 

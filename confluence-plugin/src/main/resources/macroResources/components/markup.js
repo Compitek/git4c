@@ -158,14 +158,13 @@ var Markup = {
             }
         },
         openDialog: function () {
-            this.$refs.sourcedialog.show(this.rawContent)
+            this.$refs.sourcedialog.show(this.rawContent, this.locationPath)
             $("#git4c-markdown-dialog-close-button").blur()
         },
         copyToClipboard: function copyToClipboard() {
             if (window.clipboardData && window.clipboardData.setData) {
                 // IE specific code path to prevent textarea being shown while dialog is visible.
-                return clipboardData.setData("Text", this.rawContent);
-
+                return window.clipboardData.setData("Text", this.rawContent);
             } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
                 var textarea = document.createElement("textarea");
                 textarea.textContent = this.rawContent;
