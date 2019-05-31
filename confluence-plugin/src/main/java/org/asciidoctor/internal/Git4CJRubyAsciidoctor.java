@@ -9,6 +9,7 @@ import org.asciidoctor.extension.JavaExtensionRegistry;
 import org.asciidoctor.extension.RubyExtensionRegistry;
 import org.asciidoctor.extension.internal.ExtensionRegistryExecutor;
 import org.asciidoctor.log.LogHandler;
+import org.asciidoctor.log.LogRecord;
 import org.jruby.CompatVersion;
 import org.jruby.Ruby;
 import org.jruby.RubyHash;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -39,6 +41,10 @@ public class Git4CJRubyAsciidoctor implements Asciidoctor {
     private AsciidoctorModule asciidoctorModule;
     protected RubyGemsPreloader rubyGemsPreloader;
     protected Ruby rubyRuntime;
+
+    private List<LogHandler> logHandlers = new ArrayList<>();
+
+    private final static Logger LOGGER = Logger.getLogger("asciidoctorj");
 
     private Git4CJRubyAsciidoctor(AsciidoctorModule asciidoctorModule, Ruby rubyRuntime) {
         super();
@@ -528,13 +534,16 @@ public class Git4CJRubyAsciidoctor implements Asciidoctor {
     }
 
 
-    public void registerLogHandler(LogHandler logHandler) {
-        //TODO
+    @Override
+    public void registerLogHandler(final LogHandler logHandler) {
+        if (!this.logHandlers.contains(logHandler)) {
+            this.logHandlers.add(logHandler);
+        }
     }
 
-
-    public void unregisterLogHandler(LogHandler logHandler) {
-        //TODO
+    @Override
+    public void unregisterLogHandler(final LogHandler logHandler) {
+        this.logHandlers.remove(logHandler);
     }
 
     Ruby getRubyRuntime() {
@@ -553,5 +562,16 @@ public class Git4CJRubyAsciidoctor implements Asciidoctor {
     @Override
     public ExtensionGroup createGroup(String groupName) {
         return new Git4cExtensionGroupImpl(groupName, this);
+    }
+
+    @Override
+    public void log(LogRecord logRecord) {
+        for (LogHandler logHandler: logHandlers) {
+            try {
+                logHandler.log(logRecord);
+            } catch (Exception e) {
+                LOGGER.log(Level.WARNING, "Unexpected exception while logging Asciidoctor log entry", e);
+            }
+        }
     }
 }
