@@ -30,7 +30,7 @@ import java.util.logging.Logger;
  * Most of this code is copied from {@link JRubyAsciidoctor}
  * We've created it because we need Asciidoctor instance with both our load paths and classloader
  */
-public class Git4CJRubyAsciidoctor implements Asciidoctor {
+public class Git4CJRubyAsciidoctor implements Asciidoctor, LogHandler {
 
     private static final Logger logger = Logger.getLogger(Git4CJRubyAsciidoctor.class.getName());
 
