@@ -38,12 +38,12 @@ class GetDocumentationsMacroByDocumentationsMacroIdUseCase(
     val log = getLogger()
 
     override fun execute(request: GetDocumentationsMacroByDocumentationsMacroIdQuery): Result<DocumentationsMacro, Exception> {
-
+        log.debug(">>execute",request)
         val searchedMacroId = request.macroId
         val user = request.user
 
         val macroViewStatus = macroViewCache.get(request.macroId)?.macroViewStatus ?: MacroView.MacroViewStatus.FAILED
-
+        log.info("macroViewStatus = ",macroViewStatus)
         if (macroViewStatus == MacroView.MacroViewStatus.FAILED) {
             val macroSettings = macroSettingsDatabase.get(request.macroId)
                     ?: return@execute Result.error(NotFoundException(request.transactionInfo, VerificationStatus.REMOVED))
