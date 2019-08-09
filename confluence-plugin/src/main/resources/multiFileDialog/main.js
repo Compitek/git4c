@@ -103,8 +103,11 @@
         '            </div>'+
         '            <div class="field-group">'+
         '              <label for="doc_macro-repo_root_directory">Root Directory</label>'+
-        '               <input style="max-width: 50%" v-model="rootDirectory" class="text" type="text" disabled ref="doc_macro-root_directory"></input>'+
-        '                    <button v-bind:style="[downloadingFiles? {width: \'9%\'} : {}]" id="git4c-multi_file_dialog-select_root_dir_button" v-bind:disabled="downloadingFiles" @click.prevent="showFileTreeDialog()" class="aui-button aui-button-primary">'+
+        '               <input style="max-width: 37%" v-model="rootDirectory" class="text" type="text" disabled ref="doc_macro-root_directory"></input>'+
+        '                    <button id="git4c-multi_file_dialog-refresh_button"  @click.prevent="resetRootDirectory()" class="aui-button aui-button-primary">'+
+        '                        <span class="aui-icon aui-icon-small aui-iconfont-refresh-small">reset to root</span>'+
+        '                    </button>' +
+        '                    <button v-bind:style="[downloadingFiles? {width: \'9%\'} : {}]" id="git4c-multi_file_dialog-select_root_dir_button" v-bind:disabled="downloadingFiles || !isFilled" @click.prevent="showFileTreeDialog()" class="aui-button aui-button-primary">'+
         '                        <span v-bind:style="[downloadingFiles? {margin: \'0\'} : {}]" v-bind:class="{\'aui-icon aui-icon-wait\': downloadingFiles, \'aui-iconfont-nav-children-large\': !downloadingFiles}" class="aui-icon aui-icon-small">Show file tree</span>'+
         '                    </button>'+
         '            </div>'+
@@ -433,7 +436,6 @@
                                         var tree = response.tree
                                         vm.fileTree = vm.filterFileTreeNodes(tree, function(node) {return node.type === "DIR"} )
                                         vm.downloadingFiles = false
-                                        vm.fileTree.unshift("")
                                         createFileTreeDialog(vm.fileTree, vm.processSelectedRootFilter, vm)
                                     })
                                     .catch(function(error) {
@@ -708,6 +710,9 @@
                                 this.$refs.custom_repository_dialog.initFields(repoInfo)
                             }
                         }
+                    },
+                    resetRootDirectory: function(){
+                      this.rootDirectory = ""
                     },
                     showFileTreeDialog: function() {
                         if(this.fileTree) {
