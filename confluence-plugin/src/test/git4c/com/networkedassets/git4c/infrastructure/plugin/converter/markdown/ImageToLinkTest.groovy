@@ -30,7 +30,7 @@ class ImageToLinkTest extends Specification {
         new XmlSlurper().parseText("""<span xmlns:v-on="http://www.w3.org/1999/xhtml">${webPage}</span>""")
 
         then:
-        webPage == """<span><p><a href="javascript:void(0)" class=" git4c-image git4c-unclickable-link">link</a></p> </span>"""
+        webPage == """<span><p><a href="javascript:void(0)" class="git4c-unclickable-link">link</a></p> </span>"""
     }
 
 }
