@@ -433,6 +433,7 @@
                                         var tree = response.tree
                                         vm.fileTree = vm.filterFileTreeNodes(tree, function(node) {return node.type === "DIR"} )
                                         vm.downloadingFiles = false
+                                        vm.fileTree.unshift("")
                                         createFileTreeDialog(vm.fileTree, vm.processSelectedRootFilter, vm)
                                     })
                                     .catch(function(error) {
@@ -477,7 +478,8 @@
                         var repositoryDetails = undefined
 
                         const globToSave = this.glob ? this.glob.split(',') : []
-                        const defaultDocItemToSave = this.defaultDocItem ? this.defaultDocItem : ""
+                        //TODO() fix "defaultDocItemToSave-emptyString" error. now will "."
+                        const defaultDocItemToSave = this.defaultDocItem ? this.defaultDocItem : "."
 
                         var repositoryName = null
                         if(this.customRepository && this.customRepository.uuid){
