@@ -12,6 +12,7 @@ data class DocumentationMacro(
         val branch: String,
         val glob: List<String>,
         val defaultDocItem: String,
+        val showTocComponent: Boolean?,
         val extractor: ExtractorData?,
         val rootDirectory: String?
 )

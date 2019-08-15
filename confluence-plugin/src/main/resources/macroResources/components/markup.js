@@ -22,6 +22,7 @@ var Markup = {
             rawContent: "",
             toc: undefined,
             defaultFile: undefined,
+            showTocComponent: true,
             singleFile: false,
             hasSource: false,
             overlayVisible: false,
@@ -60,7 +61,6 @@ var Markup = {
             if(urlAnchor){
                 this.nextAnchor = urlAnchor
             }
-
             if (fullName) {
                 Events.$emit("OverlayChange", false)
                 const vm = this
@@ -77,8 +77,6 @@ var Markup = {
                         authorEmail: docItem.lastUpdateAuthorEmail,
                         updateTime: new Date(docItem.lastUpdateTime)
                     };
-
-                    const template = docItem.content;
                     vm.template = docItem.content;
                     vm.content = docItem.content;
                     vm.toc = docItem.tableOfContents;
@@ -339,6 +337,7 @@ var Markup = {
             vm.nextAnchor = anchor
         })
 
+        vm.showTocComponent = (ParamsService.getParams().showTocComponent=='true')
 
         $(this.$el).find("#git4c-toolbar_filetree-button").tooltip()
         $(this.$el).find("#git4c-filetree-expand_button").tooltip()

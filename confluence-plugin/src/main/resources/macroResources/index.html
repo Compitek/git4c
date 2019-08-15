@@ -158,7 +158,7 @@
                                     </a>
                                     <button ref="raw_to_clipboard_button" class="aui-button" v-on:click="copyToClipboard()"
                                             v-show="hasSource" style="margin-right: 5px">
-                                        <span class="aui-icon aui-icon-small aui-iconfont-copy" style="margin-right: 1px">
+                                        <span class="aui-icon aui-icon-small aui-iconfont-copy-clipboard" style="margin-right: 1px">
                                             Copy the source of this file to clipboard
                                         </span>
                                     </button>
@@ -169,7 +169,7 @@
                             </div>
                         </div>
                         <div>
-                            <filepreview ref="preview" v-show="!overlayVisible && locationPath!==''" :content="template" :show-toc="locationPath !== ''" :toc="toc" :toolbar-height="41"></filepreview>
+                            <filepreview ref="preview" v-show="!overlayVisible" :content="template"  :show-toc="showTocComponent" :toc="toc" :toolbar-height="41"></filepreview>
                         </div>
                     </div>
 

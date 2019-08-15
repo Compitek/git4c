@@ -4,7 +4,8 @@ var Git4CFilePreview = {
         const Loading = {
             template: '<div></div>'
         };
-
+';LK[' +
+''
         const dynamiccontent = {
             functional: true,
             props: {
@@ -35,6 +36,8 @@ var Git4CFilePreview = {
                             Prism.highlightElement(block)
                         });
 
+
+
                     }
                 }
                 const component = template ? dynComponent : Loading;
@@ -50,8 +53,8 @@ var Git4CFilePreview = {
             },
             template:
             '    <div class="git4c-filepreview-component git4c-any-content" v-bind:class=\'{ "git4c-file-preview-markdown" : markdown, "git4c-file-preview-no-lines": !showLineNumbers }\'>'+
-            '        <toc @anchor="anchor" v-if="showToc && toc && toc.children && toc.children.length > 0" style="margin-bottom: 20px" :data="toc"></toc>'+
-            '        <dynamiccontent ref="dc" @anchor="anchor" @moveToFile="moveToFile" :template="content"></dynamiccontent>'+
+            '       <toc @anchor="anchor" v-if="showToc && toc && toc.children && toc.children.length > 0" style="margin-bottom: 20px" :data="toc"></toc>'+
+            '       <dynamiccontent ref="dc" @anchor="anchor" @moveToFile="moveToFile" :template="content"></dynamiccontent>'+
             '    </div>',
             props: {
                 content: {
@@ -126,7 +129,6 @@ var Git4CFilePreview = {
             },
             mounted: function () {
                 const vm = this
-
                 vm.$nextTick(function () {
                     vm.refreshMarkdownState()
                 });

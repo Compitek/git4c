@@ -116,6 +116,10 @@
         '               <input v-model="defaultDocItem" class="text" type="text" id="doc_macro-default_Doc_Item" placeholder="Readme.md">'+
         '               <div class="description">Please enter location of default document (Optional)</div>'+
         '            </div>'+
+        '            <div class="field-group">'+
+        '               <label for="doc_macro-default_top_bar">Generate table of contents</label>'+
+        '               <input v-model="showTocComponent" class="checkbox" type="checkbox" id="doc_macro-default_top_bar">'+
+        '            </div>'+
         '         </div>'+
         '         </div>'+
         '         </div>'+
@@ -177,6 +181,7 @@
                 glob: undefined,
                 globList: Array(),
                 defaultDocItem: "",
+                showTocComponent: true,
 
                 rootDirectory: "",
 
@@ -193,10 +198,10 @@
                 isFilled: false,
 
                 branchDownloadPromise: undefined
-
             }
 
             const data = $.extend(dataModel, macro.params);
+
 
             const hide = function(uuid) {
                 console.log("Closing")
@@ -480,9 +485,8 @@
                         var repositoryDetails = undefined
 
                         const globToSave = this.glob ? this.glob.split(',') : []
-                        //TODO() fix "defaultDocItemToSave-emptyString" error. now will "."
-                        const defaultDocItemToSave = this.defaultDocItem ? this.defaultDocItem : "."
-
+                        const defaultDocItemToSave = (!this.defaultDocItem || this.defaultDocItem.trim().length==0 )? this.defaultDocItem :  "."
+                        const showTocComponentToSave = this.showTocComponent
                         var repositoryName = null
                         if(this.customRepository && this.customRepository.uuid){
                             repositoryName = this.repository.repositoryName
@@ -530,9 +534,9 @@
                             branch: this.branch,
                             glob:  globToSave,
                             defaultDocItem: defaultDocItemToSave,
+                            showTocComponent: showTocComponentToSave,
                             rootDirectory: rd
                         }
-
                         Git4CApi.createMacro(toSend)
                             .then(function(response) {
                                 const uuid = response.uuid
@@ -672,6 +676,9 @@
                                 })
                             })
 
+                        if(data.showTocComponent){
+                            vm.showTocComponent = data.showTocComponent=="true"
+                        }
                         if(data.uuid){
                             if(this.glob){
                                 if(this.glob == "undefined"){

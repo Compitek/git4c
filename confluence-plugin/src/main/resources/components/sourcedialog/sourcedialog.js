@@ -23,7 +23,7 @@ var Git4CSourceDialog = {
             '           </a>'+
             '           <button class="aui-button" v-on:click="copyToClipboard()"'+
             '                    style="margin-right: 5px">'+
-            '               <span class="aui-icon aui-icon-small aui-iconfont-copy" style="margin-right: 1px">'+
+            '               <span class="aui-icon aui-icon-small aui-iconfont-copy-clipboard" style="margin-right: 1px">'+
             '                    Copy the source of this file to clipboard'+
             '               </span>'+
             '           </button>'+
