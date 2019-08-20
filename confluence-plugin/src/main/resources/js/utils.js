@@ -1,7 +1,7 @@
 var Git4CUtils = {
 
-    filesWithoutLineNumbers: ["puml", "png", "jpeg", "jpg", "svg", "md", "adoc"],
-    filesWithSourceCode: ["puml", "svg", "md", "adoc", "ad", "asciidoc", "asc"],
+    filesWithoutLineNumbers: ["puml", "png", "jpeg", "jpg", "svg"],
+    filesWithSourceCode: ["puml", "svg", "md", "adoc", "ad", "asciidoc", "asc","yaml","yml","wsdl","xsd", "xml","json","txt"],
 
     hasLines: function (file) {
         var lines = true;
