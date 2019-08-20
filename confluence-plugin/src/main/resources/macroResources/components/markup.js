@@ -17,6 +17,7 @@ var Markup = {
         return {
             fileData: undefined,
             locationPath: "",
+            name: "",
             template: undefined,
             content: "",
             rawContent: "",
@@ -72,6 +73,7 @@ var Markup = {
 
 
                     vm.locationPath = docItem.locationPath;
+                    vm.name = docItem.name;
                     vm.fileData = {
                         authorFullName: docItem.lastUpdateAuthorName,
                         authorEmail: docItem.lastUpdateAuthorEmail,
