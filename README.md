@@ -1,4 +1,4 @@
-# Git4C - Git Viewer For Confluence
+__# Git4C - Git Viewer For Confluence
 
 See plugin details at: <a href="http://opensource.networkedassets.com/opensource-lab/confluence/newgit4c/index.html">Git Viewer for Confluence Description</a>  
 User Guide: <a href="http://opensource.networkedassets.com/opensource-lab/confluence/newgit4c/documentation/User/">Git Viewer for Confluence User Guide</a>  

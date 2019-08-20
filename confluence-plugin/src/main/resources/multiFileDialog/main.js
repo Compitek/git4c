@@ -485,7 +485,10 @@
                         var repositoryDetails = undefined
 
                         const globToSave = this.glob ? this.glob.split(',') : []
-                        const defaultDocItemToSave = (!this.defaultDocItem || this.defaultDocItem.trim().length==0 )? this.defaultDocItem :  "."
+                        if(!this.defaultDocItem || this.defaultDocItem.trim().length==0){
+                            this.defaultDocItem = "."
+                        }
+                        const defaultDocItemToSave = this.defaultDocItem
                         const showTocComponentToSave = this.showTocComponent
                         var repositoryName = null
                         if(this.customRepository && this.customRepository.uuid){
