@@ -13,7 +13,7 @@ var Git4CSourceDialog = {
             '       <!-- The dialog\'s title -->'+
             '        <h2 class="aui-dialog2-header-main">File source</h2>'+
             '        <!-- Actions to render on the right of the header -->'+
-            '        <div>'+
+            '        <div style=" text-align: right; margin-top: 10px;">'+
             '           <a ref="raw_save_file_button"'+
             '              v-bind:href="\'data:application/xml;charset=utf-8,\' + rawContent" v-bind:download="locationPath"'+
             '               style="margin-right: 5px" class="aui-button">'+
