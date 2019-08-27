@@ -107,7 +107,7 @@ var Git4CSourceDialog = {
                         var textarea = document.createElement("textarea");
                         textarea.textContent = this.rawContent;
                         textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
-                        document.getElementById('git4c-raw-sourcecode-dialog').appendChild(textarea);
+                        document.body.appendChild(textarea);
                         textarea.select();
                         try {
                             console.log("textarea.textContent " + textarea.textContent );
@@ -116,7 +116,7 @@ var Git4CSourceDialog = {
                             console.warn("Copy to clipboard failed.", ex);
                             return false;
                         } finally {
-                            document.getElementById('git4c-raw-sourcecode-dialog').removeChild(textarea);
+                            document.body.removeChild(textarea);
                         }
                     }
                 },
