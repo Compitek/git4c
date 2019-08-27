@@ -132,7 +132,7 @@
                                                 </aui-inline-dialog>
                                             </span>
                                             <span ref="pathholder" class="git4c-file">
-                                                {{path}}
+                                                {{path}} (<a v-show="repoLink" v-bind:href="repoLink" target="_blank" >{{repoLink}}</a>)
                                             </span>
                                         </span>
                                         <span v-show="fileData" style="float: right; padding-left: 20px; padding-right: 5px; font-size: 12px">

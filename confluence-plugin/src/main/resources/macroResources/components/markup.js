@@ -33,6 +33,7 @@ var Markup = {
             nextAnchor: undefined,
             simpleMce: undefined,
             fileTimeout: undefined,
+            repoLink:undefined,
 
             //Commit history data
             macroUuid: undefined,
@@ -126,6 +127,13 @@ var Markup = {
                         vm.macroUuid = ParamsService.getUuid()
                         vm.branch = vm.$route.query.branch
                         vm.file = fullName
+
+                        //TODO() refactor this workaround for repoLink.
+                        Vue.http.get(UrlService.getRestUrl('documentation', vm.macroUuid, 'repository'))
+                            .then(function (response) {
+                                var path = response.body.path;
+                                vm.repoLink = path.substring(0,path.length-4)+'/blob/' + vm.branch +'/' + vm.file;
+                            })
 
                         vm.$nextTick(function() {
                             clearTimeout(vm.fileTimeout)
