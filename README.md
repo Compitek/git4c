@@ -1,6 +1,6 @@
 # Just how to build it?
 1. get maven onto your system. 
-  Check if it already installed with "mvn --version" command. I test to build with 3.6.0 version. 
+  Check if it is already installed ("mvn --version" command, I test to build with 3.6.0 version of maven). 
    Otherwise <a href="https://maven.apache.org/download.cgi" target="_blank">download it</a>, set <a     href="https://maven.apache.org/install.html">environment variables</a> and maybe restart your pc) 
 2. get <a href="https://github.com/Compitek/git4c/archive/master.zip" target="_blank">zip archive</a> from this repository and extract it
 3. go to confluence-plugin folder from extract destinanion
