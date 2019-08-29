@@ -15,7 +15,7 @@ var Git4CSourceDialog = {
             '        <!-- Actions to render on the right of the header -->'+
             '        <div style=" text-align: right; margin-top: 10px;">'+
             '           <a ref="raw_save_file_button"'+
-            '              v-bind:href="\'data:application/xml;charset=utf-8,\' + rawContent" v-bind:download="locationPath"'+
+            '              v-bind:href="\'data:application/xml;charset=utf-8,\' + encodeURIComponent(rawContent)" v-bind:download="name"'+
             '               style="margin-right: 5px" class="aui-button">'+
             '                <span class="aui-icon aui-icon-small aui-iconfont-export" style="margin-right: 1px">'+
             '                    Save the full source of this file'+
@@ -48,13 +48,15 @@ var Git4CSourceDialog = {
             data: function () {
                 return {
                     rawContent: "",
-                    locationPath: ""
+                    locationPath: "",
+                    name: ""
                 };
             },
             methods: {
-                show: function (fileContent, strPath) {
+                show: function (fileContent, strPath, strName) {
                     this.rawContent = fileContent
                     this.locationPath = strPath
+                    this.name = strName
                     const normalizedString = fileContent.replace(/\s+/g, '')
 
                     //https://stackoverflow.com/a/6234804/2511670
