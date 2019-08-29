@@ -1,3 +1,11 @@
+# Just how to build it?
+1. get maven onto your system (tested with 3.6.0 version)
+2. get zip archive from this repository and extract it
+3. go to confluence-plugin folder from extract destinanion
+4. open command-line tool and start command:
+  mvn clean package
+5. go to target folder and look for "confluence-plugin.obr" . This is a compiled plugin.
+
 # Git4C - Git Viewer For Confluence
 
 See plugin details at: <a href="http://opensource.networkedassets.com/opensource-lab/confluence/newgit4c/index.html">Git Viewer for Confluence Description</a>  
