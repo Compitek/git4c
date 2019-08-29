@@ -132,7 +132,13 @@ var Markup = {
                         Vue.http.get(UrlService.getRestUrl('documentation', vm.macroUuid, 'repository'))
                             .then(function (response) {
                                 var path = response.body.path;
-                                vm.repoLink = path.substring(0,path.length-4)+'/blob/' + vm.branch +'/' + vm.file;
+                                if (path.startsWith("git@")){
+                                    vm.repoLink = "https://" + path.substring(4,path.length-4).replace(':','/')+'/blob/' + vm.branch +'/' + vm.file;
+                                }
+                                else if(path.startsWith("https://")){
+                                    vm.repoLink = path.substring(0,path.length-4)+'/blob/' + vm.branch +'/' + vm.file;
+                                }
+
                             })
 
                         vm.$nextTick(function() {
@@ -166,7 +172,7 @@ var Markup = {
             }
         },
         openDialog: function () {
-            this.$refs.sourcedialog.show(this.rawContent, this.locationPath)
+            this.$refs.sourcedialog.show(this.rawContent, this.locationPath, this.name)
             $("#git4c-markdown-dialog-close-button").blur()
         },
         copyToClipboard: function copyToClipboard() {
