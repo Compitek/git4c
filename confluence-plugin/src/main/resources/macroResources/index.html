@@ -132,7 +132,7 @@
                                                 </aui-inline-dialog>
                                             </span>
                                             <span ref="pathholder" class="git4c-file">
-                                                {{path}} (<a v-show="repoLink" v-bind:href="repoLink" target="_blank" >{{repoLink}}</a>)
+                                                {{path}}(<a v-show="repoLink"  :href="repoLinkItem" target="_blank" >{{repoLinkItem}}</a>)
                                             </span>
                                         </span>
                                         <span v-show="fileData" style="float: right; padding-left: 20px; padding-right: 5px; font-size: 12px">
@@ -163,7 +163,7 @@
                                         </span>
                                     </button>
                                     <div ref="commit_history_div" style="margin-right: 20px; display: flex; flex-direction: column; justify-content: center">
-                                        <commit-history :macro-uuid="macroUuid" :branch="branch" :file="file" ref="commit_history"></commit-history>
+                                        <commit-history :macro-uuid="macroUuid" :branch="branch" :file="file"  :repo-link="repoLink" :server-type="serverType" ref="commit_history"></commit-history>
                                     </div>
                                 </div>
                             </div>

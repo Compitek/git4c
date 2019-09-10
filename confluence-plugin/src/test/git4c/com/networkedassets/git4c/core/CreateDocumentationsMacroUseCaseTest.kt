@@ -33,7 +33,7 @@ class CreateDocumentationsMacroUseCaseTest : AsyncUseCaseTest<CreateDocumentatio
     fun `Git4C Macro is created when proper Custom Repository is used`() {
         val repositoryToCreate = CustomRepository("src/test/resources", NoAuth())
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,0,null,null)
         val createMacroCommand = CreateDocumentationsMacroCommand(macroToCreate, "anonymous");
 
         val request = useCase.execute(createMacroCommand);
@@ -52,7 +52,7 @@ class CreateDocumentationsMacroUseCaseTest : AsyncUseCaseTest<CreateDocumentatio
     fun `Git4C Macro is not created when wrong data in Custom Repository were used`() {
         val repositoryToCreate = CustomRepository("", NoAuth())
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null, null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,0,null, null)
         val createMacroCommand = CreateDocumentationsMacroCommand(macroToCreate, "anonymous");
 
         val request = useCase.execute(createMacroCommand);
@@ -75,7 +75,7 @@ class CreateDocumentationsMacroUseCaseTest : AsyncUseCaseTest<CreateDocumentatio
         components.database.predefinedRepositoryDatabase.put("1", PredefinedRepository("1", "1", "name_predefine"))
         val repositoryToCreate = PredefinedRepositoryToCreate("1")
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,0,null, null)
         val createMacroCommand = CreateDocumentationsMacroCommand(macroToCreate, "anonymous");
 
         val request = useCase.execute(createMacroCommand);
@@ -95,7 +95,7 @@ class CreateDocumentationsMacroUseCaseTest : AsyncUseCaseTest<CreateDocumentatio
         components.database.predefinedRepositoryDatabase.put("1", PredefinedRepository("1", "1", "name_predefine"))
         val repositoryToCreate = PredefinedRepositoryToCreate("1")
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,0,null, null)
         val createMacroCommand = CreateDocumentationsMacroCommand(macroToCreate, "anonymous");
 
         val request = useCase.execute(createMacroCommand);
@@ -117,7 +117,7 @@ class CreateDocumentationsMacroUseCaseTest : AsyncUseCaseTest<CreateDocumentatio
         components.providers.repositoryProvider.put("1", RepositoryWithNoAuthorization("1", "src/test/resources", false))
         val repositoryToCreate = PredefinedRepositoryToCreate("1")
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,0,null, null)
         val createMacroCommand = CreateDocumentationsMacroCommand(macroToCreate, "anonymous");
 
         val request = useCase.execute(createMacroCommand);
@@ -140,7 +140,7 @@ class CreateDocumentationsMacroUseCaseTest : AsyncUseCaseTest<CreateDocumentatio
         components.providers.repositoryProvider.put("1", RepositoryWithNoAuthorization("1", "", false))
         val repositoryToCreate = PredefinedRepositoryToCreate("1")
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,0,null, null)
         val createMacroCommand = CreateDocumentationsMacroCommand(macroToCreate, "anonymous");
 
         val request = useCase.execute(createMacroCommand);
@@ -161,7 +161,7 @@ class CreateDocumentationsMacroUseCaseTest : AsyncUseCaseTest<CreateDocumentatio
     fun `Git4C Macro is not created with custom Repository when administrator forced users to use predefined repositories`() {
         val repositoryToCreate = CustomRepository("", NoAuth())
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,0,null, null)
         val createMacroCommand = CreateDocumentationsMacroCommand(macroToCreate, "anonymous");
         components.database.pluginSettings.setForcePredefinedRepositories(true)
 
@@ -186,7 +186,7 @@ class CreateDocumentationsMacroUseCaseTest : AsyncUseCaseTest<CreateDocumentatio
         components.database.pluginSettings.setForcePredefinedRepositories(true)
         val repositoryToCreate = PredefinedRepositoryToCreate("1")
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("glob"), "readme.me", null,0,null, null)
         val createMacroCommand = CreateDocumentationsMacroCommand(macroToCreate, "anonymous");
 
         val request = useCase.execute(createMacroCommand);
@@ -210,7 +210,7 @@ class CreateDocumentationsMacroUseCaseTest : AsyncUseCaseTest<CreateDocumentatio
         val listOfMacros = ArrayList<DocumentationMacro>()
         listOfMacros.apply {
             for (i in 0..3) {
-                listOfMacros.add(DocumentationMacro(repository, "testRepository$i", "master", listOf("glob"), "readme.me", null,null, null))
+                listOfMacros.add(DocumentationMacro(repository, "testRepository$i", "master", listOf("glob"), "readme.me", null,0,null, null))
             }
         }
 

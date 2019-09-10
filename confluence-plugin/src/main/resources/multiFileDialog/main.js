@@ -117,6 +117,15 @@
         '               <div class="description">Please enter location of default document (Optional)</div>'+
         '            </div>'+
         '            <div class="field-group">'+
+        '               <label for="doc_macro-repo_server_type">Repository server type</label>'+
+        '               <select class="select" v-model="serverType" id="doc_macro-repo_server_type">'+
+        '                  <option value="0">Other</option>'+
+        '                  <option value="1">GitLab</option>'+
+        '                  <option value="2">GitHub</option>'+
+        '                  <option value="3">Bitbucket</option>'+
+        '               </select>'+
+        '            </div>'+
+        '            <div class="field-group">'+
         '               <label for="doc_macro-default_top_bar">Generate table of contents</label>'+
         '               <input v-model="showTocComponent" class="checkbox" type="checkbox" id="doc_macro-default_top_bar">'+
         '            </div>'+
@@ -182,6 +191,7 @@
                 globList: Array(),
                 defaultDocItem: "",
                 showTocComponent: true,
+                serverType: 0,
 
                 rootDirectory: "",
 
@@ -334,7 +344,18 @@
                         this.customRepositoryAuthType = this.repository.credentials.sshKey ? "SSHKEY" : this.repository.credentials.username ? "USERNAMEPASSWORD" : "NOAUTH"
                         this.customRepositoryName = this.repository.repositoryName
                         this.customRepositoryUrl = this.repository.sourceRepositoryUrl
-
+                        this.defineServerType(this.customRepositoryUrl)
+                    },
+                    defineServerType: function (url) {
+                        if (url.toLowerCase().contains("gitlab.")) {
+                            this.serverType = 1;
+                        } else if (url.toLowerCase().contains("github.")) {
+                            this.serverType = 2;
+                        } else if (url.toLowerCase().contains("bitbucket.")) {
+                            this.serverType = 3;
+                        } else {
+                            this.serverType = 0;
+                        }
                     },
                     isPredefined: function () {
                         return !this.customRepository ? true : (this.repository.uuid !== this.customRepository.uuid) &&  (this.repository.repositoryName !== this.customRepository.repositoryName)
@@ -375,7 +396,6 @@
                                     .then(function(response) {
                                         vm.downloadingBranches = false;
                                         const branches = response.allBranches
-
                                         if (branches.length == 0){
                                             vm.branches = undefined
                                             vm.downloadingBranches = false
@@ -490,6 +510,7 @@
                         }
                         const defaultDocItemToSave = this.defaultDocItem
                         const showTocComponentToSave = this.showTocComponent
+                        const serverTypeToSave = this.serverType
                         var repositoryName = null
                         if(this.customRepository && this.customRepository.uuid){
                             repositoryName = this.repository.repositoryName
@@ -538,6 +559,7 @@
                             glob:  globToSave,
                             defaultDocItem: defaultDocItemToSave,
                             showTocComponent: showTocComponentToSave,
+                            serverType: serverTypeToSave,
                             rootDirectory: rd
                         }
                         Git4CApi.createMacro(toSend)
@@ -654,14 +676,12 @@
                     },
                     init: function(){
                         const vm = this
-
                         if(vm.customRepositoryName) {
                             vm.customRepository = {
                                 repositoryName: vm.customRepositoryName
                             }
                             vm.repository = vm.customRepository
                         }
-
                         Git4CApi.getPredefinedRepositoriesForceSetting()
                             .then(function(response) {
                                 if(response.forced === true) {
@@ -678,7 +698,6 @@
                                     vm.showError(text)
                                 })
                             })
-
                         if(data.showTocComponent){
                             vm.showTocComponent = data.showTocComponent=="true"
                         }

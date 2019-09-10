@@ -190,7 +190,7 @@ class ProperRefreshRepositoryTest {
     private fun createMacro(): DocumentationsMacro {
         val repositoryToCreate = CustomRepository(repo.repositoryPath, NoAuth())
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf(), "readme.me", null,null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf(), "readme.me", null,0,null, null)
         val request = execute(CreateDocumentationsMacroCommand(macroToCreate, user)).get() as RequestId
         await().until { Assertions.assertThat(execute(CreateDocumentationsMacroResultRequest(request.requestId)).get()).isInstanceOf(SavedDocumentationsMacro::class.java) }
         val savedMacro = execute(CreateDocumentationsMacroResultRequest(request.requestId)).get() as SavedDocumentationsMacro

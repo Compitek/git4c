@@ -37,7 +37,7 @@ class CreateNewMacroTest {
     fun `Created macro should be accessible after page load`() {
         val repositoryToCreate = CustomRepository(directory.absolutePath, NoAuth())
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf(), "README.md", null,null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf(), "README.md", null,0,null, null)
         val user = "test"
         val permission = PageAndSpacePermissionsForUser("", "", "test", true)
         application.cache.pageAndSpacePermissionsForUserCache.put(permission.uuid, permission)
@@ -59,7 +59,7 @@ class CreateNewMacroTest {
     fun `Created macro should be accessible when view page has not been aquired`() {
         val repositoryToCreate = CustomRepository(directory.absolutePath, NoAuth())
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf(), "README.md", null,null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf(), "README.md", null,0,null, null)
         val user = "test"
         val permission = PageAndSpacePermissionsForUser("", "", "test", true)
         application.cache.pageAndSpacePermissionsForUserCache.put(permission.uuid, permission)
@@ -78,7 +78,7 @@ class CreateNewMacroTest {
     fun `Created macro should have accessible default file content`() {
         val repositoryToCreate = CustomRepository(directory.absolutePath, NoAuth())
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf(), "README.md", null,null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf(), "README.md", null,0,null, null)
         val user = "test"
         val permission = PageAndSpacePermissionsForUser("", "", "test", true)
         application.cache.pageAndSpacePermissionsForUserCache.put(permission.uuid, permission)
@@ -111,7 +111,7 @@ class CreateNewMacroTest {
         for (times in 1..macrosNumber) Thread {
             val repositoryToCreate = CustomRepository(directory.absolutePath, NoAuth())
             val repository = RepositoryDetails(repositoryToCreate)
-            val macroToCreate = DocumentationMacro(repository, genTransactionId(), genTransactionId(), listOf(), documentName, null,null, null)
+            val macroToCreate = DocumentationMacro(repository, genTransactionId(), genTransactionId(), listOf(), documentName, null,0,null, null)
             val request = execute(CreateDocumentationsMacroCommand(macroToCreate, user)).get() as RequestId
             await().until { assertThat(execute(CreateDocumentationsMacroResultRequest(request.requestId)).get()).isInstanceOf(SavedDocumentationsMacro::class.java) }
             val createdMacro = execute(CreateDocumentationsMacroResultRequest(request.requestId)).get() as SavedDocumentationsMacro
@@ -140,7 +140,7 @@ class CreateNewMacroTest {
     fun `Created Single File macro should have only one file in index`() {
         val repositoryToCreate = CustomRepository(directory.absolutePath, NoAuth())
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("README.md"), "README.md", null,null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf("README.md"), "README.md", null,0,null, null)
         val user = "test"
         val permission = PageAndSpacePermissionsForUser("", "", "test", true)
         application.cache.pageAndSpacePermissionsForUserCache.put(permission.uuid, permission)
@@ -168,7 +168,7 @@ class CreateNewMacroTest {
 
         val repositoryToCreate = CustomRepository(Paths.get("src/test/resources", "integration/ignoretest").toFile().absolutePath, NoAuth())
         val repository = RepositoryDetails(repositoryToCreate)
-        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf(), "", null,null, null)
+        val macroToCreate = DocumentationMacro(repository, "testRepository", "master", listOf(), "", null,0,null, null)
         val user = "test"
         val permission = PageAndSpacePermissionsForUser("", "", "test", true)
         application.cache.pageAndSpacePermissionsForUserCache.put(permission.uuid, permission)

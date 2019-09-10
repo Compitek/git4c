@@ -13,6 +13,7 @@ data class DocumentationMacro(
         val glob: List<String>,
         val defaultDocItem: String,
         val showTocComponent: Boolean?,
+        val serverType: Int=0,
         val extractor: ExtractorData?,
         val rootDirectory: String?
 )

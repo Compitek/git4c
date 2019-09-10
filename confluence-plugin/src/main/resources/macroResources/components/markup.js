@@ -23,6 +23,7 @@ var Markup = {
             rawContent: "",
             toc: undefined,
             defaultFile: undefined,
+            serverType: 0,
             showTocComponent: true,
             singleFile: false,
             hasSource: false,
@@ -34,7 +35,6 @@ var Markup = {
             simpleMce: undefined,
             fileTimeout: undefined,
             repoLink:undefined,
-
             //Commit history data
             macroUuid: undefined,
             branch: undefined,
@@ -121,7 +121,6 @@ var Markup = {
                                 // return new Date(docItem.lastUpdateTime).toLocaleString()
                                 return vm.fileData.authorFullName + " <" + vm.fileData.authorEmail + ">"
                             }
-
                         });
 
                         vm.macroUuid = ParamsService.getUuid()
@@ -133,10 +132,10 @@ var Markup = {
                             .then(function (response) {
                                 var path = response.body.path;
                                 if (path.startsWith("git@")){
-                                    vm.repoLink = "https://" + path.substring(4,path.length-4).replace(':','/')+'/blob/' + vm.branch +'/' + vm.file;
+                                    vm.repoLink = "https://" + path.substring(4,path.length-4).replace(':','/');
                                 }
                                 else if(path.startsWith("https://")){
-                                    vm.repoLink = path.substring(0,path.length-4)+'/blob/' + vm.branch +'/' + vm.file;
+                                    vm.repoLink = path.substring(0,path.length-4);
                                 }
 
                             })
@@ -241,6 +240,9 @@ var Markup = {
     computed: {
         stickyButtonText: function () {
             return (this.sticky ? "Non-sticky" : "Sticky") + " toolbar"
+        },
+        repoLinkItem: function(){
+            return this.repoLink + "/blob/" + this.branch + "/" + this.file
         },
         path: function () {
 
@@ -354,7 +356,7 @@ var Markup = {
         })
 
         vm.showTocComponent = (ParamsService.getParams().showTocComponent=='true')
-
+        vm.serverType =   ParamsService.getParams().serverType
         $(this.$el).find("#git4c-toolbar_filetree-button").tooltip()
         $(this.$el).find("#git4c-filetree-expand_button").tooltip()
     },

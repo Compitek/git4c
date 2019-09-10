@@ -16,7 +16,15 @@ var Git4CCommitHistory = {
 '                    <div>' +
 '                    <button style="display: none"></button>'+
 '                        <div>' +
-'                           <div class="git4c-commithistory-branch-holder"><div>Current branch: <b>{{branch}}</b></div></div>'+
+'                           <div class="git4c-commithistory-branch-holder" >' +
+'                               <div style="display: flex; justify-content: space-between;">' +
+'                                   <div>Current branch: <b>{{branch}}</b></div>' +
+'                                   <div v-if="serverType==1 || serverType==2">' +
+'                                       <a :href="comparedCommitsLink" target="_blank"  v-if="comparedCommitsLink.length>0">compare two commits</a>' +
+'                                       <div v-else>compare two commits</div>' +
+'                                   </div>' +
+'                               </div>' +
+'                           </div>'+
 '                        </div>'+
 '                        <div><hr style="border: 1px solid #CCCCCC"/></div>'+
 '                        <div v-show="listAvailable" v-for="commit in commitList" ref="commit_table">'+
@@ -25,11 +33,18 @@ var Git4CCommitHistory = {
 '                                    <div style="word-break: break-all" v-html="commit.message"></div>'+
 '                                    <div style="display: flex; flex-direction: row; margin-top: 10px; font-weight: bold;">'+
 '                                        <div style="margin-right: 3px"> {{commit.date}} by </div>'+
-'                                        <div> {{ commit.authorName}} </div>'+
+'                                        <div> {{commit.authorName}} </div>'+
 '                                    </div>'+
 '                                </div>'+
-'                                <div v-bind:title="commit.id" style="width:85px; align-self: center; height: 30px""> '+
-'                                <button @click.prevent href="javascript:void(0)" v-bind:title="commit.id" class="aui-button aui-button-secondary commit-id-tooltip" style="order: 4; pointer-events: none;"> {{commit.id.substring(0,8)}} </button>'+
+'                                <div v-bind:title="commit.id" style="width:95px; align-self: center; height: 30px""> '+
+'                                   <div class="checkbox" v-if="serverType==1 || serverType==2">'+
+'                                         <input class="checkbox" type="checkbox" ' +
+'                                            :value="commit.id.substring(0,8)" v-model="checkedCommits">'+
+'                                       <label>{{commit.id.substring(0,8)}}</label>'+
+'                                   </div>'+
+'                                   <div v-else>'+
+'                                        {{commit.id.substring(0,8)}}'+
+'                                   </div>'+
 '                                </div>'+
 '                            </div>'+
 '                            <hr style="border: 1px solid #CCCCCC"/>'+
@@ -50,7 +65,8 @@ var Git4CCommitHistory = {
                 data: function () {
                     return {
                         commitList: [],
-                        promise: undefined
+                        promise: undefined,
+                        checkedCommits: []
                     }
                 },
                 mounted: function () {
@@ -59,9 +75,17 @@ var Git4CCommitHistory = {
                 computed: {
                     listAvailable: function(){
                         return this.commitList && this.commitList.length
+                    },
+                    comparedCommitsLink: function(){
+                        if(this.checkedCommits.length==2) {
+                            return this.repoLink + '/compare/' + this.checkedCommits[0] + '...' + this.checkedCommits[1]
+                        }
+                        else {
+                            return ''
+                        }
                     }
                 },
-                props: ["macroUuid", "file", "branch"],
+                props: ["macroUuid", "file", "branch", "serverType", "repoLink"],
                 watch: {
                     "macroUuid": function () {
                         this.commitList = []
@@ -75,6 +99,7 @@ var Git4CCommitHistory = {
                 },
                 methods: {
                     openDialog: function(){
+                        this.checkedCommits=[]
                         this.getCommitList()
                         AJS.dialog2(this.$refs.commit_history_dialog).show()
                     },
