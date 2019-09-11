@@ -19,7 +19,7 @@ var Git4CCommitHistory = {
 '                           <div class="git4c-commithistory-branch-holder" >' +
 '                               <div style="display: flex; justify-content: space-between;">' +
 '                                   <div>Current branch: <b>{{branch}}</b></div>' +
-'                                   <div v-if="serverType==1 || serverType==2">' +
+'                                   <div v-if="serverType!=0">' +
 '                                       <a :href="comparedCommitsLink" target="_blank"  v-if="comparedCommitsLink.length>0">compare two commits</a>' +
 '                                       <div v-else>compare two commits</div>' +
 '                                   </div>' +
@@ -37,7 +37,7 @@ var Git4CCommitHistory = {
 '                                    </div>'+
 '                                </div>'+
 '                                <div v-bind:title="commit.id" style="width:95px; align-self: center; height: 30px""> '+
-'                                   <div class="checkbox" v-if="serverType==1 || serverType==2">'+
+'                                   <div class="checkbox" v-if="serverType!=0">'+
 '                                         <input class="checkbox" type="checkbox" ' +
 '                                            :value="commit.id.substring(0,8)" v-model="checkedCommits">'+
 '                                       <label>{{commit.id.substring(0,8)}}</label>'+
@@ -78,7 +78,14 @@ var Git4CCommitHistory = {
                     },
                     comparedCommitsLink: function(){
                         if(this.checkedCommits.length==2) {
-                            return this.repoLink + '/compare/' + this.checkedCommits[0] + '...' + this.checkedCommits[1]
+                            if(this.serverType==1) {//gitlab
+                                return this.repoLink + '/commit/' + this.checkedCommits[0] + '#' + this.checkedCommits[1]
+                            }else if(this.serverType==2){//gitHub
+                                return this.repoLink + '/compare/' + this.checkedCommits[0] + '...' + this.checkedCommits[1]
+                            }else if(this.serverType==3){//bitbucket. doest'n test if it works or not
+                                return this.repoLink + '/branches/compare/' + this.checkedCommits[0] + '%0D' + this.checkedCommits[1] + '#diff'
+                            }
+                            else return ''
                         }
                         else {
                             return ''
